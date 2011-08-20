@@ -241,6 +241,10 @@ linestylefilter.REGEX_URL = new RegExp(/(?:(?:https?|s?ftp|ftps|file|smb|afp|nfs
 linestylefilter.getURLFilter = linestylefilter.getRegexpFilter(
 linestylefilter.REGEX_URL, 'url');
 
+linestylefilter.REGEX_WIKIWORD = /\b[A-Z][a-z]*[A-Z][A-Za-z0-9]*\b/g;
+linestylefilter.getWikiLinkFilter = linestylefilter.getRegexpFilter(
+linestylefilter.REGEX_WIKIWORD, 'url');
+
 linestylefilter.textAndClassFuncSplitter = function(func, splitPointsOpt)
 {
   var nextPointIndex = 0;
@@ -292,6 +296,7 @@ linestylefilter.textAndClassFuncSplitter = function(func, splitPointsOpt)
 linestylefilter.getFilterStack = function(lineText, textAndClassFunc, browser)
 {
   var func = linestylefilter.getURLFilter(lineText, textAndClassFunc);
+  var func = linestylefilter.getWikiLinkFilter(lineText, func);
 
   var plugins_;
   if (typeof(plugins) != 'undefined')
